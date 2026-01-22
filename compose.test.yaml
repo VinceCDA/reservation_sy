@@ -3,21 +3,17 @@ services:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_DATABASE: reservation
+      MYSQL_DATABASE: reservation_test
       MYSQL_USER: reservation
       MYSQL_PASSWORD: reservation
       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3311:3306"
     volumes:
-      - database_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-root}"]
-      interval: 5s
-      timeout: 3s
-      retries: 30
-
+      - database_test_data:/var/lib/mysql
   adminer:
     image: adminer
     ports:
-      - "8081:8080"
+      - "8082:8080"
 volumes:
-  database_data:
+  database_test_data:
